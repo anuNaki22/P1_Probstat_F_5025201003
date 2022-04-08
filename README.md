@@ -24,6 +24,7 @@ Pada soal, diketahui bahwa p = 0.20 dan x = 3. Diketahui juga bahwa soal ini mer
 dgeom(x = 3, prob = .2)
 ```
 Dari kode di atas, didapatkan hasil perhitungan 0.1024
+
 <img width="99" alt="image" src="https://user-images.githubusercontent.com/99629909/162525950-8d90025d-66aa-4344-b6e9-3dc40d69c139.png">
 
 
@@ -37,6 +38,7 @@ Pada soal, diketahui bahwa digunakan 10000 data random dengan probabilitas keber
 mean(rgeom(n=10000, prob=.2)==3)
 ```
 Dari kode di atas, didapatkan hasil perhitungan kurang lebih 0.1024
+
 <img width="288" alt="image" src="https://user-images.githubusercontent.com/99629909/162526548-e35f8d1e-b478-4916-b175-668503e4d33c.png">
 
 
