@@ -1,4 +1,4 @@
-# Soal Shift Modul 3
+# Praktikum 1 Probstat F [Rahmat Faris Akbar / 5025201003]
 
 ## Daftar Isi
 * [Daftar Isi](#daftar-isi)
