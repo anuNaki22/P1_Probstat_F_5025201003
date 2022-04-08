@@ -25,7 +25,7 @@ dgeom(x = 3, prob = .2)
 ```
 Dari kode di atas, didapatkan hasil perhitungan 0.1024
 
-*screenshot*
+<img width="99" alt="image" src="https://user-images.githubusercontent.com/99629909/162525950-8d90025d-66aa-4344-b6e9-3dc40d69c139.png">
 
 
 ### **Soal 1b**
