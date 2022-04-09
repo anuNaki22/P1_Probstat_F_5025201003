@@ -581,27 +581,35 @@ Contoh :
 312312312_Rola_Probstat_A_DNhistogram
 
 #### Penyelesaian
-
+Langkah-langkah yang diperlukan untuk membuat histogram dari distribusi normal adalah:
+1. generate random data sebanyak 100 random data, rataan 10, dan standar deviasinya adalah 8 menggunakan command `rnorm`
+2. assign random data tersebut ke suatu variabel. Misalkan variabel untuk menyimpan data tersebut adalah randoms
+3. gunakan command `hist` dengan parameter randoms, `breaks` 50 (sesuai yang diminta soal), dan `main` untuk memberi nama histogram tersebut dengan format nama **NRP_Nama_Probstat_{Nama Kelas}_DNhistogram**
 
 ```R
-
+randoms <- rnorm(n=100, mean=50, sd=8)
+hist(randoms, breaks = 50, main = "5025201003_Rahmat_Probstat_F_DNhistogram")
 ```
+Tampilan grafik histogram:
 
-*screenshot*
-
+<img width="548" alt="image" src="https://user-images.githubusercontent.com/99629909/162560248-1988440d-15db-4b25-b45e-a697fafa2312.png">
 
 ### **Soal 6c**
 Nilai Varian (σ²) dari hasil generate random nilai Distribusi Normal.
 
 #### Penyelesaian
+Untuk menghitung nilai varian dari distribusi normal, kita menggunakan formula 
+> Var[X]=E[X^2]−E[X]^2
 
+Kita dapat mencari E[X2] menggunakan formula integral sehingga bisa dikatakan perhitungannya cukup rumit.
+
+Pada kondisi standard, distribusi normal memiliki nilai variansi 1. Namun karena pada soal ini mean bernilai bukan 0 dan standar deviasi bukan 1, maka dapat digunakan command `rnorm` dengan parameter n sebagai banyak random data, mean sebagai rata-rata, dan sd sebagai standar deviasi.
 
 ```R
-
+var(rnorm(n=100, mean=50, sd=8))
 ```
-
-*screenshot*
-
+Dari kode di atas didapatkan nilai varian yang cukup beragam:
+<img width="277" alt="image" src="https://user-images.githubusercontent.com/99629909/162560929-85690de2-928c-4bf2-a277-2e450b8a4c57.png">
 
 
 
