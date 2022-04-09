@@ -18,7 +18,7 @@ Berapa peluang penyurvei bertemu x = 3 orang yang tidak menghadiri acara vaksina
 sebelum keberhasilan pertama ketika p = 0,20 dari populasi menghadiri acara vaksinasi ?
 (distribusi Geometrik)
 
-### Penyelesaian
+#### Penyelesaian
 Pada soal, diketahui bahwa p = 0.20 dan x = 3. Diketahui juga bahwa soal ini meruapakan permasalahan distribusi geometrik. Sehingga pengimplementasian pada bahasa R bisa menggunakan command `dgeom` pada kondisi eksak.
 ```R
 dgeom(x = 3, prob = .2)
@@ -32,7 +32,7 @@ Dari kode di atas, didapatkan hasil perhitungan 0.1024
 mean Distribusi Geometrik dengan 10000 data random , prob = 0,20 dimana distribusi
 geometrik acak tersebut X = 3 ( distribusi geometrik acak () == 3 )
 
-### Penyelesaian
+#### Penyelesaian
 Pada soal, diketahui bahwa digunakan 10000 data random dengan probabilitas keberhasilan dan X yang sama seperti soal sebelumnya. Untuk melakukan generate 10000 data random, digunakan command `rgeom` dengan parameter n = 10000 dan prob = 0.2. Karena pada soal ini digunakan banyak data, maka kita dapat menggunakan fungsi `mean` dengan kondisi X = 3.
 ```R
 mean(rgeom(n=10000, prob=.2)==3)
@@ -45,14 +45,14 @@ Dari kode di atas, didapatkan hasil perhitungan kurang lebih 0.1024
 ### **Soal 1c**
 Bandingkan Hasil poin a dan b , apa kesimpulan yang bisa didapatkan?
 
-### Penyelesaian
+#### Penyelesaian
 Dari perbandingan hasil poin a dan b dapat dilihat bahwa nilainya hampir sama antara keduanya. Sehingga dapat disimpulkan pada metode perhitungan eksak maupun simulasi (data random dengan `mean`) dapat diterapkan dalam menghitung persoalan peluang pada distribusi geometrik.
 
 
 ### **Soal 1d**
 Histogram Distribusi Geometrik , Peluang X = 3 gagal Sebelum Sukses Pertama
 
-### Penyelesaian
+#### Penyelesaian
 ```R
 library(dplyr)
 library(ggplot2)
@@ -79,7 +79,7 @@ ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
 ### **Soal 1e**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Geometrik.
 
-### Penyelesaian
+#### Penyelesaian
 Nilai Rataan dengan kondisi eksak:
 ```R
 p = 0.20
