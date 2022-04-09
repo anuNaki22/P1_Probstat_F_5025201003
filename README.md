@@ -565,11 +565,45 @@ X1 = 5
 X2 = 6
 
 #### Penyelesaian
-
+terdapat beberapa langkah untuk menyelesaikan soal ini, yaitu:
+1. generate 100 random data dengan mean = 50 dan standar deviasi = 8 menggunkan `rnorm`
+2. digunakan command `mean` untuk menghitung rata-rata dari seluruh random data yang dipanggil 
+3. kemudian simpan rata-rata 100 random data tersebut pada variabel ratarata
+4. digunkanan fungsi `floor` untuk melakukan konversi nilai rata-rata menjadi di bawah rata-rata. Namun karena pada kasus ini seluruh random data yang dipanggil adalah bilangan bulat, maka rata-rata perlu dikurangi 1 untuk menjadikan X1 di bawah rata-rata awal
+5. digunakan fungsi `ceiling` untuk melakukan konversi nilai rata-rata menjadi di atas rata-rata
+6. digunakan command `pnorm` untuk menghitung probabilitas dari distribusi normal P(X1 ≤ x ≤ X2)
+7. pada perhitungan fungsi probabilitas, dibagi menjadi 2 bagian yaitu:
+    - X1 ≤ x    => lower.tail diset ke false, karena akan dihitung x yang lebih besar dari X1 (mengarah ke head)
+    - x ≤ X2    => lower.tail diset ke true, karena akan dihitung x yang lebih kecil dari X2 (mengarah ke tail)
 
 ```R
-
+ratarata <- mean(rnorm(n=100, mean=50, sd=8))
+X1 <- floor(ratarata) - 1
+X2 <- ceiling(ratarata)
+pnorm(q=X1, mean=50, sd=8, lower.tail=F)
+pnorm(q=X2, mean=50, sd=8, lower.tail=T)
 ```
+<img width="386" alt="image" src="https://user-images.githubusercontent.com/99629909/162566137-120b828b-d010-4333-b507-8beebae0d671.png">
+
+Sedangkan untuk menghitung Z-score dapat digunakan formula berikut:
+> Z = (x - μ)/σ
+
+Sehingga implementasi dalam bahasa R sebagai berikut:
+```R
+Z1 <- (X1 - 50)/8
+Z2 <- (X2 - 50)/8
+
+pnorm(q=Z1, mean=50, sd=8, lower.tail=F)
+pnorm(q=Z2, mean=50, sd=8, lower.tail=T)
+```
+<img width="343" alt="image" src="https://user-images.githubusercontent.com/99629909/162566152-5720a168-5a0a-4600-aafc-3b9415fdb683.png">
+
+Untuk grafik plot data generate random dapat menggunakan fungsi `plot()` sebagai berikut:
+```R
+Z1 = (X1 - mean=50)/sd=8
+Z2 = (X2 - mean=50)/sd=8
+```
+Tampilan grafiknya sebagai berikut:
 
 *screenshot*
 
@@ -609,6 +643,7 @@ Pada kondisi standard, distribusi normal memiliki nilai variansi 1. Namun karena
 var(rnorm(n=100, mean=50, sd=8))
 ```
 Dari kode di atas didapatkan nilai varian yang cukup beragam:
+
 <img width="277" alt="image" src="https://user-images.githubusercontent.com/99629909/162560929-85690de2-928c-4bf2-a277-2e450b8a4c57.png">
 
 
