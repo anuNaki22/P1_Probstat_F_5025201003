@@ -67,7 +67,7 @@ ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
     size = 3,
     vjust = 0
   ) +
-  labs(title = "Probability of X = 3 Failures Prior to First Success",
+  labs(title = "Peluang X = 3 gagal Sebelum Sukses Pertama",
        subtitle = "Geometric(.2)",
        x = "Failures prior to first success (x)",
        y = "Probability")
@@ -87,30 +87,34 @@ mean = 1/p
 mean
 ```
 Didapatkan nilai rataannya adalah 5
-*screenshot*
+
+<img width="109" alt="image" src="https://user-images.githubusercontent.com/99629909/162553264-aea90806-0be8-43e9-98e8-819c55239bc1.png">
 
 
 Nilai Rataan dengan kondisi simulated (data random):
 ```R
 mean(rgeom(n = 10000, prob = .2)) + 1
 ```
-Didapatkan nilai rataannya adalah kurang lebih 5
-*screenshot*
+Didapatkan nilai rataannya adalah kurang lebih 5 (dilakukan percobaan running beberapa kali)
+
+<img width="329" alt="image" src="https://user-images.githubusercontent.com/99629909/162553308-f8f7f648-cc29-4674-87a1-2988f50d4883.png">
 
 
 Nilai Varian dengan kondisi eksak:
 ```R
 p = 0.20
-mean = (1 - p) / p^2
-mean
+var = (1 - p) / p^2
+var
 ```
 Didapatkan nilai variannya adalah 20
-*screenshot*
+
+<img width="176" alt="image" src="https://user-images.githubusercontent.com/99629909/162553368-adb5887a-85b2-4b95-bd07-61267ea93b41.png">
 
 
 Nilai Varian dengan kondisi simulated (data random):
 ```R
 var(rgeom(n = 100000, prob = .2))
 ```
-Didapatkan nilai variannya adalah kurang lebih 20
-*screenshot*
+Didapatkan nilai variannya adalah kurang lebih 20 (dilakukan beberapa kali percobaan running)
+
+<img width="290" alt="image" src="https://user-images.githubusercontent.com/99629909/162553409-19db09cb-b53d-4041-8315-2d0f30387f53.png">
