@@ -486,13 +486,58 @@ Petunjuk:
 - Gunakan fungsi bawaan R
 
 #### Penyelesaian
+Rataan untuk kondisi eksak dapat dihitung dengan rumus
+> mean(x) = 1/lambda
 
-
+Sehingga pengimplementasiannya dalam bahasa R adalah:
 ```R
-
+lambda = 3
+mean = 1/lambda
+mean
 ```
+Dari kode di atas didapatkan hasil rataan exact adalah 0.33
 
-*screenshot*
+<img width="150" alt="image" src="https://user-images.githubusercontent.com/99629909/162558625-7fd8d526-c652-415b-9d33-cb138bc4d682.png">
+
+Rataan untuk kondisi simulasi (n data random) dapat dihitung dengan command `mean` dengan parameter `rexp`. Misalkan n = 100, maka dapat dituliskan kode: 
+```R
+x <- rexp(100, 3) 
+mean(x)
+```
+atau bisa juga dituliskan dengan format langsung sebagai berikut:
+```R
+mean(rexp(100,3))
+```
+Dari kode di atas didapatkan hasil rataan simulasi adalah kurang lebih bernilai 0.33
+
+<img width="160" alt="image" src="https://user-images.githubusercontent.com/99629909/162558687-9992f381-a8c6-4a70-ad5b-4050fdb983a9.png">
+
+Varian untuk kondisi eksak dapat dihitung dengan rumus
+> var(x) = 1/(n * lambda^2)
+
+Sehingga pengimplementasiannya dalam bahasa R adalah:
+```R
+n = 100
+lambda = 3
+var = 1/(lambda^2)
+var
+```
+Dari kode di atas didapatkan hasil rataan exact adalah 0.11
+
+<img width="174" alt="image" src="https://user-images.githubusercontent.com/99629909/162558947-69b6147e-a9cb-43c0-af98-98ebf6819044.png">
+
+Varian untuk kondisi simulasi (n data random) dapat dihitung dengan command `var` dengan parameter `rexp`. Misalkan n = 100, maka dapat dituliskan kode: 
+```R
+x <- rexp(100, 3)  
+var(x)
+```
+atau bisa juga dituliskan dengan format langsung sebagai berikut:
+```R
+var(rexp(100, 3))
+```
+Dari kode di atas didapatkan hasil rataan simulasi adalah bernilai sekitar 0.11
+
+<img width="162" alt="image" src="https://user-images.githubusercontent.com/99629909/162558997-edac89a5-568d-4e4b-ab8b-644a875a53d5.png">
 
 
 
