@@ -51,14 +51,23 @@ Dari perbandingan hasil poin a dan b dapat dilihat bahwa nilainya hampir sama an
 
 ### **Soal 1d**
 Histogram Distribusi Geometrik , Peluang X = 3 gagal Sebelum Sukses Pertama
+Langkah-langkah untuk membuat grafik dalam distribusi geometrik adalah:
+0. digunakan bantuan `library(dplyr)` dan `library(ggplot2)` untuk menampilkan grafik
+1. melakukan permisalan atau menentukan range data randomnya. Pada kasus ini saya misalkan rangenya adalah antara 0 sampai 10
+2. kemudian gunakan command `data.frame`. Pada command ini dibutuhkan parameter prob yang dapat dicari dengan menggunakan command `dgeom` dengan parameter sesuai ketentuan soal (prob = 0.2)
+3. digunakan command `mutate` yang mengambil parameter dari banyak kesuksesan untuk dihighlight. Pada kasus ini adalah 3
+4. kemudian tetapkan sumbu x sebagai keberhasilan (x) dan sumbu y sebagai prob/peluang distribusi binomial
+5. atur posisi penempatan angka dan kata pada grafik, sehingga dapat terbaca dengan nyaman
+6. digunakan command `labs` untuk memberikan nama pada grafik
 
+Berikut ini merupakan kode untuk membuat grafik banyak kondisi sukses terhadap peluang distribusi binomial:
 #### Penyelesaian
 ```R
 library(dplyr)
 library(ggplot2)
 
-data.frame(x = 0:10, prob = dgeom(x = 0:10, prob = p)) %>%
-  mutate(Failures = ifelse(x == n, n, "other")) %>%
+data.frame(x = 0:10, prob = dgeom(x = 0:10, prob = .2)) %>%
+  mutate(Failures = ifelse(x == 3, 3, "other")) %>%
 ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
   geom_col() +
   geom_text(
@@ -72,9 +81,23 @@ ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
        x = "Failures prior to first success (x)",
        y = "Probability")
 ```
+Berikut ini merupakan tampilan grafiknya:
 
-*screenshot*
+<img width="487" alt="image" src="https://user-images.githubusercontent.com/99629909/162556058-b7bc7b1b-4170-4a49-a621-3f51ed9db36b.png">
 
+Sedangkan untuk menampilkan grafik histogram x (banyak kondisi sukses) terhadap frekuensi, dapat ditampilkan dengan langkah berikut ini:
+1. generate data random menggunakan command `rgeom`. Disini saya mencontohkan dengan hanya mengambil 10000 data random
+2. kemudian digunakan package library(tidyverse) untuk membantu dalam pembuatan grafik
+3. digunakan command `qplot` dengan parameter geom adalah histogram dan set warna border sesuai yang kita inginkan
+
+```R
+x <- rgeom(10000, .2) 
+library(tidyverse)
+qplot(x, geom = "histogram", col = I("white"))
+```
+Berikut merupakan tampilan grafik histogram x (banyak kondisi sukses) terhadap frekuensi:
+
+<img width="488" alt="image" src="https://user-images.githubusercontent.com/99629909/162556148-cf29f1ea-c6e5-452c-ba13-23fd0366a05e.png">
 
 ### **Soal 1e**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Geometrik.
@@ -143,6 +166,7 @@ Gambarkan grafik histogram berdasarkan kasus tersebut.
 
 #### Penyelesaian
 Langkah-langkah untuk membuat grafik dalam distribusi binomial adalah:
+0. digunakan bantuan `library(dplyr)` dan `library(ggplot2)` untuk menampilkan grafik
 1. melakukan permisalan atau menentukan range data randomnya. Pada kasus ini saya misalkan rangenya adalah antara 0 sampai 10
 2. kemudian gunakan command `data.frame`. Pada command ini dibutuhkan parameter prob yang dapat dicari dengan menggunakan command `dbinom` dengan parameter sesuai ketentuan soal
 3. digunakan command `mutate` yang mengambil parameter dari banyak kesuksesan untuk dihighlight. Pada kasus ini adalah 4
@@ -195,6 +219,7 @@ Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Binomial.
 #### Penyelesaian
 Rataan untuk kondisi eksak dapat dihitung dengan rumus
 > mean(x) = size * p
+
 Sehingga pengimplementasiannya dalam bahasa R adalah:
 ```R
 n=20
@@ -222,6 +247,7 @@ Dari kode di atas didapatkan hasil rataan simulasi adalah kurang lebih bernilai 
 
 Varian untuk kondisi eksak dapat dihitung dengan rumus
 > var(x) = size * p * (1-p)
+
 Sehingga pengimplementasiannya dalam bahasa R adalah:
 ```R
 n=20
@@ -246,6 +272,8 @@ Dari kode di atas didapatkan hasil rataan simulasi adalah kurang lebih bernilai 
 
 <img width="355" alt="image" src="https://user-images.githubusercontent.com/99629909/162555760-939e0dca-5bf3-431e-89ed-f2cf9b31c251.png">
 
+
+
 ## Nomor 3
 Diketahui data dari sebuah tempat bersalin di rumah sakit tertentu menunjukkan rata-rata historis
 4,5 bayi lahir di rumah sakit ini setiap hari. (gunakan Distribusi Poisson)
@@ -254,24 +282,70 @@ Diketahui data dari sebuah tempat bersalin di rumah sakit tertentu menunjukkan r
 Berapa peluang bahwa 6 bayi akan lahir di rumah sakit ini besok?
 
 #### Penyelesaian
-
+Pada soal diketahui bahwa rata-rata historis bayi lahir per hari atau lambdanya adalah 4,5. Sehingga dapat digunakan command `dpois` untuk menghitung peluang eksak (probability density function dari X), dimana nilai x adalah 6.
 
 ```R
-
+dpois(x=6, lambda=4.5)
 ```
+Didapatkan pluang bahwa 6 bayi akan lahir di rumah sakit ini besok adalah sebesar 0.1281201
 
-*screenshot*
-
+<img width="198" alt="image" src="https://user-images.githubusercontent.com/99629909/162556341-114039d9-b420-4b51-872e-1e7f471d8227.png">
 
 ### **Soal 3b**
-simulasikan dan buatlah histogram kelahiran 6 bayi akan lahir di rumah sakit ini selama
-setahun (n = 365)
+simulasikan dan buatlah histogram kelahiran 6 bayi akan lahir di rumah sakit ini selama setahun (n = 365)
 
 #### Penyelesaian
+Langkah-langkah untuk membuat grafik dalam distribusi poisson adalah:
+0. digunakan bantuan `library(dplyr)` dan `library(ggplot2)` untuk menampilkan grafik
+1. melakukan permisalan atau menentukan range data randomnya. Pada kasus ini saya misalkan rangenya adalah antara 0 sampai 10
+2. kemudian gunakan command `data.frame`. Pada command ini dibutuhkan parameter prob yang dapat dicari dengan menggunakan command `dbinom` dengan parameter sesuai ketentuan soal
+3. digunakan command `mutate` yang mengambil parameter dari banyak kesuksesan untuk dihighlight. Pada kasus ini adalah 4
+4. kemudian tetapkan sumbu x sebagai keberhasilan (x) dan sumbu y sebagai prob/peluang distribusi binomial
+5. atur posisi penempatan angka dan kata pada grafik, sehingga dapat terbaca dengan nyaman
+6. digunakan command `labs` untuk memberikan nama pada grafik
 
+Berikut ini merupakan kode untuk membuat grafik banyak kondisi sukses terhadap peluang distribusi binomial:
+```R
+library(dplyr)
+library(ggplot2)
+#library(scales)
+
+data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 20, prob = .2)) %>%
+  mutate(Heads = ifelse(heads == 4, "4", "other")) %>%
+  ggplot(aes(x = factor(heads), y = prob, fill = Heads)) +
+  geom_col() +
+  geom_text(
+    aes(label = round(prob,4), y = prob + 0.01),
+    position = position_dodge(0.9),
+    size = 2,
+    vjust = 0
+  ) +
+  labs(title = "Probability of X = 4 successes.",
+       subtitle = "b(20, .2)",
+       x = "Successes (x)",
+       y = "probability") 
+```
+Berikut ini merupakan tampilan grafiknya:
+
+<img width="391" alt="image" src="https://user-images.githubusercontent.com/99629909/162554964-ce76e49a-7228-4b5c-b1ef-31a51d9af380.png">
+
+Sedangkan untuk menampilkan grafik histogram x (banyak kondisi sukses) terhadap frekuensi, dapat ditampilkan dengan langkah berikut ini:
+1. generate data random menggunakan command `rbinom`. Disini saya mencontohkan dengan hanya mengambil 10 data random
+2. kemudian digunakan package library(tidyverse) untuk membantu dalam pembuatan grafik
+3. digunakan command `qplot` dengan parameter geom adalah histogram dan set warna border sesuai yang kita inginkan
 
 ```R
+x <- rbinom(10, 20, .2) 
+library(tidyverse)
+qplot(x, geom = "histogram", col = I("white"))
+```
+Berikut merupakan tampilan grafik histogram x (banyak kondisi sukses) terhadap frekuensi:
 
+<img width="387" alt="image" src="https://user-images.githubusercontent.com/99629909/162555107-4271e787-84ff-4ae4-8c66-93f44ead89de.png">
+
+```R
+x <- rpois(365, 4.5) 
+qplot(x, geom = "histogram", col = I("white"))
 ```
 
 *screenshot*
@@ -283,24 +357,28 @@ dan bandingkan hasil poin a dan b , Apa kesimpulan yang bisa didapatkan
 #### Penyelesaian
 
 
-```R
-
-```
-
-*screenshot*
-
-
 ### **Soal 3d**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Poisson.
 
 #### Penyelesaian
 
-
+Nilai rataan dapat dihitung dengan kode berikut:
 ```R
-
+x <- rpois(365, 4.5) 
+mean(x)
 ```
+didapatkan rataannya adalah kurang lebih 4.5
 
-*screenshot*
+<img width="186" alt="image" src="https://user-images.githubusercontent.com/99629909/162557244-54e6e0b6-01da-45c8-aa8a-8b8cb3fc3d6f.png">
+
+Nilai varian dapat dihitung dengan kode berikut:
+```R
+x <- rpois(365, 4.5)  
+var(x)
+```
+didapatkan rataannya adalah kurang lebih 4.5
+
+<img width="185" alt="image" src="https://user-images.githubusercontent.com/99629909/162557286-cbf5302e-2a76-48a3-9ed4-7820f77c06f5.png">
 
 
 
@@ -311,39 +389,64 @@ Diketahui nilai x = 2 dan v = 10. Tentukan:
 Fungsi Probabilitas dari Distribusi Chi-Square.
 
 #### Penyelesaian
-
+Pada soal diketahui bahwa nilai x adalah 2 dan nilai v atau derajat kebebasannya adalah 10
 
 ```R
-
+pchisq(2, 10)
 ```
+didapatkan hasilnya adalah 0.0037
 
-*screenshot*
-
+<img width="127" alt="image" src="https://user-images.githubusercontent.com/99629909/162557411-b54e52e8-bd2b-452e-93d8-808e5cab6358.png">
 
 ### **Soal 4b**
 Histogram dari Distribusi Chi-Square dengan 100 data random.
 
 #### Penyelesaian
-
-
+1. generate data random menggunakan command `rchisq`. Disini saya mencontohkan dengan hanya mengambil 100 data random sesuai ketentuan soal
+2. pada `rchisq` membuthkan parameter berupa derajat kebebasan, dimana pada soal ini derajat kebebasannya bernilai 10
+3. kemudian digunakan package library(tidyverse) untuk membantu dalam pembuatan grafik
+4. digunakan command `qplot` dengan parameter geom adalah histogram dan set warna border sesuai yang kita inginkan
 ```R
-
+x <- rchisq(100, 10)
+library(tidyverse)
+qplot(x, geom = "histogram", col = I("white"))
 ```
 
-*screenshot*
-
+<img width="395" alt="image" src="https://user-images.githubusercontent.com/99629909/162557461-d8685031-82c5-402c-8492-a5a99aef554f.png">
 
 ### **Soal 4c**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Chi-Square.
 
 #### Penyelesaian
+Nilai rataan dari distribusi Chi-Square adalah sama dengan derajat kebebasan. Atau bisa dituliskan dengan formula:
+> μ = df
 
+Sehingga nilai rataanya adalah 10.
+
+Pengimplementasiannya dalam bahasa R adalah sebagai berikut:
 
 ```R
-
+x <- rchisq(100, 10) 
+mean(x)
 ```
+Hasil running kode di atas mendapatkan nilai rataan yang sama sesuai dengan teori yaitu 10.
 
-*screenshot*
+<img width="185" alt="image" src="https://user-images.githubusercontent.com/99629909/162557680-5f38e613-0372-47a7-b649-b057db10ecf8.png">
+
+Nilai varian dari distribusi Chi-Square adalah sama dengan 2 kali derajat kebebasan. Atau bisa dituliskan dengan formula:
+> μ = 2df
+
+Sehingga nilai variannya adalah 20.
+
+Pengimplementasiannya dalam bahasa R adalah sebagai berikut:
+
+```R
+x <- rchisq(100, 10)  
+var(x)
+```
+Hasil running kode di atas mendapatkan nilai varian yang sama sesuai dengan teori yaitu 20.
+
+<img width="182" alt="image" src="https://user-images.githubusercontent.com/99629909/162557729-5c2815bb-243d-4aa3-9e68-e629dc3e4229.png">
 
 
 
