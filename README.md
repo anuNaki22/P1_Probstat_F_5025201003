@@ -52,6 +52,7 @@ Dari perbandingan hasil poin a dan b dapat dilihat bahwa nilainya hampir sama an
 ### **Soal 1d**
 Histogram Distribusi Geometrik , Peluang X = 3 gagal Sebelum Sukses Pertama
 Langkah-langkah untuk membuat grafik dalam distribusi geometrik adalah:
+
 0. digunakan bantuan `library(dplyr)` dan `library(ggplot2)` untuk menampilkan grafik
 1. melakukan permisalan atau menentukan range data randomnya. Pada kasus ini saya misalkan rangenya adalah antara 0 sampai 10
 2. kemudian gunakan command `data.frame`. Pada command ini dibutuhkan parameter prob yang dapat dicari dengan menggunakan command `dgeom` dengan parameter sesuai ketentuan soal (prob = 0.2)
@@ -87,7 +88,7 @@ Berikut ini merupakan tampilan grafiknya:
 
 Sedangkan untuk menampilkan grafik histogram x (banyak kondisi sukses) terhadap frekuensi, dapat ditampilkan dengan langkah berikut ini:
 1. generate data random menggunakan command `rgeom`. Disini saya mencontohkan dengan hanya mengambil 10000 data random
-2. kemudian digunakan package library(tidyverse) untuk membantu dalam pembuatan grafik
+2. kemudian digunakan package `library(tidyverse)` untuk membantu dalam pembuatan grafik
 3. digunakan command `qplot` dengan parameter geom adalah histogram dan set warna border sesuai yang kita inginkan
 
 ```R
@@ -233,7 +234,7 @@ Dari kode di atas didapatkan hasil rataan exact adalah 4
 
 Rataan untuk kondisi simulasi (n data random) dapat dihitung dengan command `mean` dengan parameter `rbinom`. Misalkan n = 10, maka dapat dituliskan kode: 
 ```R
-x <- rbinom(100, 20, .2) 
+x <- rbinom(10, 20, .2) 
 mean(x)
 ```
 atau bisa juga dituliskan dengan format langsung sebagai berikut:
@@ -453,37 +454,77 @@ Hasil running kode di atas mendapatkan nilai varian yang sama sesuai dengan teor
 ## Nomor 5
 Diketahui bilangan acak (random variable) berdistribusi exponential (λ = 3). Tentukan
 
+Petunjuk:
+- Gunakan set.seed(1)
+- Gunakan fungsi bawaan R
+
 ### **Soal 5a**
 Fungsi Probabilitas dari Distribusi Exponensial
 
 #### Penyelesaian
+Fungsi Probabilitas (densitas) dari Distribusi Exponensial adalah sebagai berikut:
+> f(x; λ) = λe^(-λx)
 
+Langkah-langkah untuk menghitung fungsi probabilitas dari distribusi exponensial dalam bahasa R adalaah:
+1. digunakan fungsi `set.seed(1)` supaya pada saat pemanggilan random data, nilainya tetap/konsisten
+2. digunakan fungsi `rexp(1)` untuk generate 1 data random
+3. digunakan fungsi `dexp()` dengan parameter data dari `rexp(1)` dan lambda 3 
 
 ```R
-
+set.seed(1)
+dexp(rexp(1), 3)
 ```
+Hasil dari Fungsi Probabilitas Distribusi Exponensial di atas adalah 0.31
 
-*screenshot*
-
+<img width="150" alt="image" src="https://user-images.githubusercontent.com/99629909/162599060-482cd98c-b121-4039-82fc-2a1d01f93ae7.png">
 
 ### **Soal 5b**
 Histogram dari Distribusi Exponensial untuk 10, 100, 1000 dan 10000 bilangan random
 
 #### Penyelesaian
-
+Dalam pembuatan histogram dari distribusi exponential, digunakan fungsi `hist()` yang di dalamnya telah digenerate data random menggunakan fungsi `rexp` dengan banyak data sesuai yang diinginkan dan dengan nilai lambda sebesar 3.
+```R
+# random data = 10
+hist(rexp(10, 3)
+     ,main = "Distribution Exponential of 10 random data"
+     ,xlab = "variables"
+     ,breaks = 15
+     ,density = 15)
+```
+<img width="468" alt="image" src="https://user-images.githubusercontent.com/99629909/162599626-bdad3349-01d8-45ed-9890-26ac13950295.png">
 
 ```R
-
+# random data = 100
+hist(rexp(100, 3)
+     ,main = "Distribution Exponential of 100 random data"
+     ,xlab = "variables"
+     ,breaks = 15
+     ,density = 15)
 ```
+<img width="469" alt="image" src="https://user-images.githubusercontent.com/99629909/162599655-9caa5780-2f42-42dc-9e09-ead57baca882.png">
 
-*screenshot*
+```R
+# random data = 1000
+hist(rexp(1000, 3)
+     ,main = "Distribution Exponential of 1000 random data"
+     ,xlab = "variables"
+     ,breaks = 15
+     ,density = 15)
+```
+<img width="478" alt="image" src="https://user-images.githubusercontent.com/99629909/162599666-4965d683-09d4-4237-a444-b8d36fdb0514.png">
 
+```R
+# random data = 10000
+hist(rexp(10000, 3)
+     ,main = "Distribution Exponential of 10000 random data"
+     ,xlab = "variables"
+     ,breaks = 15
+     ,density = 15)
+```
+<img width="475" alt="image" src="https://user-images.githubusercontent.com/99629909/162599679-24beb83d-eb49-425e-85e2-8837e01a723e.png">
 
 ### **Soal 5c**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Exponensial untuk n = 100 dan λ = 3
-Petunjuk:
-- Gunakan set.seed(1)
-- Gunakan fungsi bawaan R
 
 #### Penyelesaian
 Rataan untuk kondisi eksak dapat dihitung dengan rumus
@@ -600,13 +641,13 @@ pnorm(q=Z2, mean=50, sd=8, lower.tail=T)
 
 Untuk grafik plot data generate random dapat menggunakan fungsi `plot()` sebagai berikut:
 ```R
-Z1 = (X1 - mean=50)/sd=8
-Z2 = (X2 - mean=50)/sd=8
+x <- rnorm(n=100, mean=50, sd=8)
+y <- dnorm(x, mean = 50, sd = 8)
+plot(x,y)
 ```
 Tampilan grafiknya sebagai berikut:
 
-*screenshot*
-
+<img width="604" alt="image" src="https://user-images.githubusercontent.com/99629909/162598935-b684fe4c-119e-407f-a5cb-e4d8585c821c.png">
 
 ### **Soal 6b**
 Generate Histogram dari Distribusi Normal dengan breaks 50 dan format penamaan:
@@ -645,11 +686,3 @@ var(rnorm(n=100, mean=50, sd=8))
 Dari kode di atas didapatkan nilai varian yang cukup beragam:
 
 <img width="277" alt="image" src="https://user-images.githubusercontent.com/99629909/162560929-85690de2-928c-4bf2-a277-2e450b8a4c57.png">
-
-
-
-
-
-
-
-
