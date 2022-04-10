@@ -288,7 +288,7 @@ Pada soal diketahui bahwa rata-rata historis bayi lahir per hari atau lambdanya 
 ```R
 dpois(x=6, lambda=4.5)
 ```
-Didapatkan pluang bahwa 6 bayi akan lahir di rumah sakit ini besok adalah sebesar 0.1281201
+Didapatkan peluang bahwa 6 bayi akan lahir di rumah sakit ini besok adalah sebesar 0.1281201
 
 <img width="198" alt="image" src="https://user-images.githubusercontent.com/99629909/162556341-114039d9-b420-4b51-872e-1e7f471d8227.png">
 
@@ -297,66 +297,45 @@ simulasikan dan buatlah histogram kelahiran 6 bayi akan lahir di rumah sakit ini
 
 #### Penyelesaian
 Langkah-langkah untuk membuat grafik dalam distribusi poisson adalah:
-0. digunakan bantuan `library(dplyr)` dan `library(ggplot2)` untuk menampilkan grafik
-1. melakukan permisalan atau menentukan range data randomnya. Pada kasus ini saya misalkan rangenya adalah antara 0 sampai 10
-2. kemudian gunakan command `data.frame`. Pada command ini dibutuhkan parameter prob yang dapat dicari dengan menggunakan command `dbinom` dengan parameter sesuai ketentuan soal
-3. digunakan command `mutate` yang mengambil parameter dari banyak kesuksesan untuk dihighlight. Pada kasus ini adalah 4
-4. kemudian tetapkan sumbu x sebagai keberhasilan (x) dan sumbu y sebagai prob/peluang distribusi binomial
-5. atur posisi penempatan angka dan kata pada grafik, sehingga dapat terbaca dengan nyaman
-6. digunakan command `labs` untuk memberikan nama pada grafik
+1. menggunakan fungsi `set.seed` agar data random yang dipanggil memiliki nilai yang tetap
+2. membuat 365 data random dengan fungsi `rpois` dan menyimpannya dalam variabel `bayi`
+3. membuat plot dengan geom histogram dengan memasukkan paramter-parameter yang dibutuhkan
 
 Berikut ini merupakan kode untuk membuat grafik banyak kondisi sukses terhadap peluang distribusi binomial:
 ```R
-library(dplyr)
-library(ggplot2)
-#library(scales)
+set.seed(2)
 
-data.frame(heads = 0:10, prob = dbinom(x = 0:10, size = 20, prob = .2)) %>%
-  mutate(Heads = ifelse(heads == 4, "4", "other")) %>%
-  ggplot(aes(x = factor(heads), y = prob, fill = Heads)) +
-  geom_col() +
-  geom_text(
-    aes(label = round(prob,4), y = prob + 0.01),
-    position = position_dodge(0.9),
-    size = 2,
-    vjust = 0
-  ) +
-  labs(title = "Probability of X = 4 successes.",
-       subtitle = "b(20, .2)",
-       x = "Successes (x)",
-       y = "probability") 
+bayi <- data.frame('data' = rpois(365, 4.5))
+
+bayi %>% ggplot() +
+  geom_histogram(aes(x = data,
+                     y = stat(count / sum(count)),
+                     fill = data == 6),
+                 binwidth = 1,
+                 color = 'black',) +
+  scale_x_continuous(breaks = 0:10) + 
+  labs(x = 'Banyak bayi lahir setiap periode',
+       y = 'Proporsi',
+       title = 'kelahiran 6 bayi akan lahir di rumah sakit ini selama setahun (n = 365)') +
+  theme_bw()
 ```
 Berikut ini merupakan tampilan grafiknya:
 
-<img width="391" alt="image" src="https://user-images.githubusercontent.com/99629909/162554964-ce76e49a-7228-4b5c-b1ef-31a51d9af380.png">
+<img width="699" alt="image" src="https://user-images.githubusercontent.com/99629909/162600561-71ba0e6c-9e10-4098-bf10-bbc3b4965b90.png">
 
-Sedangkan untuk menampilkan grafik histogram x (banyak kondisi sukses) terhadap frekuensi, dapat ditampilkan dengan langkah berikut ini:
-1. generate data random menggunakan command `rbinom`. Disini saya mencontohkan dengan hanya mengambil 10 data random
-2. kemudian digunakan package library(tidyverse) untuk membantu dalam pembuatan grafik
-3. digunakan command `qplot` dengan parameter geom adalah histogram dan set warna border sesuai yang kita inginkan
-
+Untuk bisa mengetahui nilai eksak dari kondisi True pada grafik histogram di atas adalah dengan cara berikut:
 ```R
-x <- rbinom(10, 20, .2) 
-library(tidyverse)
-qplot(x, geom = "histogram", col = I("white"))
+bayi %>% dplyr::summarize(enam_bayi = sum(bayi$data == 6) / n())
 ```
-Berikut merupakan tampilan grafik histogram x (banyak kondisi sukses) terhadap frekuensi:
-
-<img width="387" alt="image" src="https://user-images.githubusercontent.com/99629909/162555107-4271e787-84ff-4ae4-8c66-93f44ead89de.png">
-
-```R
-x <- rpois(365, 4.5) 
-qplot(x, geom = "histogram", col = I("white"))
-```
-
-*screenshot*
+<img width="537" alt="image" src="https://user-images.githubusercontent.com/99629909/162600655-30871be5-8588-4e5b-ae6f-33ecb63f1f6b.png">
 
 
 ### **Soal 3c**
 dan bandingkan hasil poin a dan b , Apa kesimpulan yang bisa didapatkan
 
 #### Penyelesaian
-
+Hasil dari perhitungan simulasi adalah 0.12 atau 12%, sangat mendekati hasil perhitungan theoritical probability yang nilainya 0.1281201 atau 12.81201%.
+Jadi kesimpulan yang dapat diambil adalah bahwa theoritical probability terbukti benar dan dapat dipakai dalam perhitungan probabilitasi poisson.
 
 ### **Soal 3d**
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi Poisson.
