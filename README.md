@@ -1,4 +1,4 @@
-# Praktikum 1 Probstat F [Rahmat Faris Akbar / 5025201003]
+# P1_Probstat_F_5025201003
 
 ## Daftar Isi
 * [Daftar Isi](#daftar-isi)
